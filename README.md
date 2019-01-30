@@ -3,7 +3,7 @@
 ## Installation
 
 ```bash
-$ npm i -D j-2-j
+$ npm i -D @cilly/j-2-j
 ```
 
 ## Setting File
