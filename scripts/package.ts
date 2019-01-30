@@ -6,7 +6,7 @@ const dist = {
   private: packageJson.private,
   version: packageJson.version,
   "bin": {
-    [packageJson.name]: "./bin.js"
+    "j-2-j": "./bin.js"
   },
   description: packageJson.description,
   main: packageJson.main,
@@ -17,9 +17,7 @@ const dist = {
   repository: packageJson.repository,
   bugs: packageJson.bugs,
   homepage: packageJson.homepage,
-  dependencies: {
-    "execa": packageJson.dependencies.execa
-  },
+  dependencies: packageJson.dependencies,
 };
 
 fs.writeFileSync( `./dist/package.json` , JSON.stringify( dist, null, '  ' ) );

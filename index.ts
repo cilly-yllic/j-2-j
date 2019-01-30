@@ -9,7 +9,7 @@ const version = '1.0.0';
 const name    = 'j-2-j';
 
 console.log( `> run ${name}` );
-export default function ( cwd: string = join( __dirname, '../..' ) ) {
+export default function ( cwd: string = join( __dirname, '../../..' ) ) {
 
   program.version( version, '-v, --version' );
   program.command( 'generate' )
