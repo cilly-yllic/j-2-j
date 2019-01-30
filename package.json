@@ -1,0 +1,38 @@
+{
+  "name": "j-2-j",
+  "version": "1.0.0",
+  "description": "watch json files and merge them",
+  "main": "index.js",
+  "scripts": {
+    "test:set-up": "ts-node ./test up -i ./assets/_i18n -o ./.j-2-j/assets",
+    "build": "rm -rf ./dist && tsc -p . && npm run package && cp ./README.md ./dist",
+    "package": "ts-node ./scripts/package",
+    "changelog": "node changelog",
+    "test": "ts-node ./test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cilly-yllic/collect-json-pieces.git"
+  },
+  "keywords": [
+    "json",
+    "i18n"
+  ],
+  "author": "cilly",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cilly-yllic/collect-json-pieces/issues"
+  },
+  "homepage": "https://github.com/cilly-yllic/collect-json-pieces#readme",
+  "dependencies": {
+    "chalk": "^2.4.2",
+    "chokidar": "^2.0.4",
+    "commander": "^2.19.0"
+  },
+  "devDependencies": {
+    "@types/node": "^10.12.18",
+    "conventional-changelog": "^3.0.5",
+    "ts-node": "^8.0.2",
+    "typescript": "^3.2.4"
+  }
+}
