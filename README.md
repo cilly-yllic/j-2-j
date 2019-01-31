@@ -50,11 +50,20 @@ $ npm i -D @cilly/j-2-j
   }
 }
 ```
+watch & generate
+```
+- -a --all : generate all ./.j-2-j/{dirs}
+- -t --trim : trim generated json files. 
 
+```
+
+set-up
 ```
 - -i --input : original dir to integrate
 - -o --output : target dir to generate
 - -c --comment-keep : (optional) generate json without comments. default false
+- -d --depth : if depth > 0 -c does not work.
+- -t --type : i18n , filename
 ```
 
 ## Purpose

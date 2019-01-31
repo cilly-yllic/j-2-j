@@ -24,10 +24,10 @@ export default function ( cwd: string, options: Options ): void {
       } );
       return;
     }
-    generate( dirPath, dir, dirFiles, separators, join( cwd, dir.outputPath ? dir.outputPath : outputPath ) )
+    generate( dirPath, dir, dirFiles, separators, join( cwd, dir.outputPath ? dir.outputPath : outputPath ), options.trim )
   } );
   files.forEach( file => {
     const filePath    = join( cwd, PROJECT_DIR, file.file );
-    generate( filePath, file, [ filePath ], separators, join( cwd, file.outputPath ? file.outputPath : outputPath ) )
+    generate( filePath, file, [ filePath ], separators, join( cwd, file.outputPath ? file.outputPath : outputPath ), options.trim )
   } );
 };

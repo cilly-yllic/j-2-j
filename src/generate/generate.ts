@@ -1,5 +1,6 @@
 import { join } from 'path';
-import { success, error, info } from '../log';
+import * as merge from 'merge';
+import { error, info } from '../log';
 import getI18n from './i18n';
 import { readJson, writeJsonFile } from '../fs';
 import { updateObject, removeComment } from '../utils';
@@ -19,15 +20,15 @@ const generateI18n = ( object, separators: Separators, state = {} ) => {
   if ( !langs.length ) {
     return state;
   }
-  langs.forEach( lang => state[lang] = { ...state[lang] || {}, ...result[lang] } );
+  langs.forEach( lang => state[lang] = merge.recursive( state[lang] || {}, result[lang] ) );
   return state;
 };
 
 const generate = ( object, separators: Separators, state = {} ) => {
-  return { ...state || {}, ...removeComment( object, separators.comment.prefix, separators.comment.suffix ) };
+  return merge.recursive( state || {}, removeComment( object, separators.comment.prefix, separators.comment.suffix ) );
 };
 
-export default function ( removePath: string, { type, outputFilename }: Output, files: string[], separators: Separators, outputPath: string ): void {
+export default function ( removePath: string, { type, outputFilename }: Output, files: string[], separators: Separators, outputPath: string, trim: boolean = false ): void {
   const reg       = new RegExp( `^${removePath}` );
   const brokenFiles: string[] = [];
   const merged    = files.reduce( ( state, file ) => {
@@ -59,13 +60,9 @@ export default function ( removePath: string, { type, outputFilename }: Output, 
       return;
     }
     mergedKeys.forEach( mergedKey => {
-      const i18nFilePath = join( outputPath, outputFilename, `${mergedKey}.json` );
-      writeJsonFile( i18nFilePath, merged[mergedKey] );
-      success( `File: ${i18nFilePath} generated!` );
+      writeJsonFile( join( outputPath, outputFilename, `${mergedKey}.json` ), merged[mergedKey], trim );
     } );
   } else {
-    const filePath = join( outputPath, `${outputFilename}.json` );
-    writeJsonFile( join( outputPath, `${outputFilename}.json` ), merged );
-    success( `File: ${filePath} generated!` );
+    writeJsonFile( join( outputPath, `${outputFilename}.json` ), merged, trim );
   }
 }

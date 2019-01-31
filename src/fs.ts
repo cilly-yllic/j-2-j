@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import { join } from 'path';
-import { warning } from './log';
+import { success, warning, info } from './log';
 import { isJson } from './utils';
 
 interface DirsFiles {
@@ -28,9 +28,10 @@ export const readJson   = ( path: string ) => {
   return JSON.parse( value );
 };
 
-export const writeJsonFile  = ( path: string, object: Object ): void => {
+export const writeJsonFile  = ( path: string, object: Object, trim: boolean = false ): void => {
   checkBeforeFiles( path );
-  fs.writeFileSync( path, JSON.stringify( object, null, '  ' ) );
+  fs.writeFileSync( path, JSON.stringify( object, null, trim ? '' : '  ' ) );
+  success( `File: ${path} generated!` );
 };
 
 export const isDir      = ( path: string ): boolean => fs.lstatSync( path ).isDirectory();
@@ -79,5 +80,6 @@ export const checkBeforeFiles = ( path: string ): void => {
       return;
     }
     fs.mkdirSync( combine );
+    info( `Dir : ${combine} did not exist, therefore create it and succeeded.` )
   } );
 };

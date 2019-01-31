@@ -1,10 +1,7 @@
 import * as chokidar from 'chokidar';
 import { join } from 'path';
+import { Options } from './generate/interfaces';
 import generate from './generate';
-
-export interface Options {
-  all: boolean;
-}
 
 // TODO generate only changed file or same root dir files.
 const changed = ( cwd: string, options: Options, path: string ) => {

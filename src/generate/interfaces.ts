@@ -3,6 +3,7 @@ import { Separators } from '../interfaces';
 export * from '../interfaces';
 export interface Options {
   all: boolean;
+  trim: boolean;
 }
 
 export type Type = 'i18n' | 'simple' | 'filename';

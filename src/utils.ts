@@ -3,7 +3,7 @@ export const isString     = ( value: any ): boolean => getValueType( value ) ===
 export const isArray      = ( value: any ): boolean => getValueType( value ) === 'Array';
 export const isObject     = ( value: any ): boolean => getValueType( value ) === 'Object';
 
-export function isJson (json ): boolean {
+export const isJson       = (json ): boolean => {
   if ( typeof json !== 'string' ) {
     return false;
   }
@@ -15,7 +15,7 @@ export function isJson (json ): boolean {
   return true;
 }
 
-export const updateObject = ( backup: Object, tmpPath: string[], value: any ): Object => {
+export const updateObject       = ( backup: Object, tmpPath: string[], value: any ): Object => {
   if ( !tmpPath.length ) {
     return { ...backup, ...value };
   }
@@ -34,7 +34,7 @@ export const updateObject = ( backup: Object, tmpPath: string[], value: any ): O
   return data;
 };
 
-const stringReverse = ( str: string ): string => {
+const stringReverse             = ( str: string ): string => {
   let result  = '';
   for ( let i = 0, n = str.length; i < n; i++ ) {
     result    = result + str[n - i - 1];
@@ -42,7 +42,7 @@ const stringReverse = ( str: string ): string => {
   return result;
 };
 
-export const hasPrefixSuffix = ( target: string, prefix: string, suffix: string ): boolean => {
+export const hasPrefixSuffix    = ( target: string, prefix: string, suffix: string ): boolean => {
   if ( !target ) {
     return false;
   }
@@ -56,7 +56,7 @@ export const removePrefixSuffix = ( target: string, prefix: string, suffix: stri
   return hasPrefixSuffix( target, prefix, suffix ) ? target.slice( prefix.length ).slice( 0, - suffix.length ) : target;
 };
 
-export const removeComment = ( data, prefix: string, suffix: string ): Object => {
+export const removeComment      = ( data, prefix: string, suffix: string ): Object => {
   return Object.keys( data ).reduce( ( state, key ) => {
     if ( hasPrefixSuffix( key, prefix, suffix ) ) {
       return state;
@@ -71,4 +71,15 @@ export const removeComment = ( data, prefix: string, suffix: string ): Object =>
   }, {} );
 };
 
-export const getFileName = ( path: string ) => path.replace( /.+\/([^\/]+)\.\w+/, '$1' );
+export const getFileName        = ( path: string ) => path.replace( /.+\/([^\/]+)\.\w+/, '$1' );
+
+export const getObjectDepth     = ( object: Object ): number => {
+  let depth   = 1;
+  Object.keys( object ).forEach( key => {
+    if ( !isObject( object[key] ) ) {
+      return;
+    }
+    depth     = Math.max( getObjectDepth( object[key] ) + 1, depth );
+  } );
+  return depth;
+};
