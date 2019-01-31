@@ -212,7 +212,7 @@ Good
 
 ## set-up target assets file
 
-*only if you use type: i18n (not type: filename or simple) to generate*
+*only if you use type: i18n or filename (not type: simple) to generate*
 
 assets/i18n/en.json
 ```json
