@@ -6,7 +6,6 @@ import { info, success } from './src/log';
 const cwd             = join( __dirname, '../../..' );
 const settingFilePath = join( cwd, PROJECT_DIR, SETTING_FILE );
 if ( exists( settingFilePath ) ) {
-  info( `j-2-j setting file: ${settingFilePath} already exists` );
   process.exit( 0 );
 }
 

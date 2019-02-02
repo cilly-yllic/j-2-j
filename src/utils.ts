@@ -71,7 +71,8 @@ export const removeComment      = ( data, prefix: string, suffix: string ): Obje
   }, {} );
 };
 
-export const getFileName        = ( path: string ) => path.replace( /.+\/([^\/]+)\.\w+/, '$1' );
+export const getFileName        = ( path: string ) => path.replace( /.+\/([^\/]+)\.\w+$/, '$1' );
+export const getBeforeFilename  = ( path: string ) => path.replace( /^\/?(.+)\/([^\/]+)\.\w+$/, '$1' );
 
 export const getObjectDepth     = ( object: Object ): number => {
   let depth   = 1;

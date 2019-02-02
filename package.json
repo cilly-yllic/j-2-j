@@ -1,7 +1,7 @@
 {
   "name": "@cilly/j-2-j",
   "private": false,
-  "version": "2.1.0",
+  "version": "3.0.3",
   "description": "watch json files and merge them",
   "main": "index.js",
   "scripts": {

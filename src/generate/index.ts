@@ -1,6 +1,7 @@
 import { join } from 'path';
 import getSettings from './settings';
 import { getFilePaths } from '../fs';
+import { getBeforeFilename } from '../utils';
 import generate from './generate';
 import split from './split-filename';
 import { Options, PROJECT_DIR } from './interfaces';
@@ -20,14 +21,18 @@ export default function ( cwd: string, options: Options ): void {
         return;
       }
       filenamesFileKeys.forEach( key => {
-        generate( dirPath, { type: dir.type, outputFilename: key }, filenamesFiles[key], separators, join( cwd, dir.outputPath ? dir.outputPath : outputPath ) )
+        generate( dirPath, { type: dir.type, outputFilename: key }, filenamesFiles[key], separators, join( cwd, dir.outputPath ? dir.outputPath : `${outputPath}/${dir.dir}` ) )
       } );
       return;
     }
-    generate( dirPath, dir, dirFiles, separators, join( cwd, dir.outputPath ? dir.outputPath : outputPath ), options.trim )
+    generate( dirPath, dir, dirFiles, separators, join( cwd, dir.outputPath ? dir.outputPath : `${outputPath}/${dir.dir}` ), options.trim )
   } );
   files.forEach( file => {
     const filePath    = join( cwd, PROJECT_DIR, file.file );
-    generate( filePath, file, [ filePath ], separators, join( cwd, file.outputPath ? file.outputPath : outputPath ), options.trim )
+    let output        = join( cwd, file.outputPath ? file.outputPath : '' );
+    if ( !file.outputPath ) {
+      output          = join( cwd, outputPath, getBeforeFilename( file.file ) );
+    }
+    generate( filePath, file, [ filePath ], separators, output, options.trim )
   } );
 };
