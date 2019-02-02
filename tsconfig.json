@@ -29,7 +29,8 @@
 
   },
   "files": [
-    "./bin.ts"
+    "./bin.ts",
+    "./install.ts"
   ],
   "exclude": [
     "node_modules",

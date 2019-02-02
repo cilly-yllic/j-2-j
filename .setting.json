@@ -1,0 +1,14 @@
+{
+  "outputPath": "./src/assets",
+  "separators": {
+    "comment": {
+      "prefix": "/*",
+      "suffix": "*/"
+    },
+    "i18n": {
+      "prefix": "::",
+      "suffix": "::"
+    }
+  },
+  "dirs": {}
+}

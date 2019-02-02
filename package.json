@@ -1,13 +1,14 @@
 {
   "name": "@cilly/j-2-j",
   "private": false,
-  "version": "2.0.1",
+  "version": "2.1.0",
   "description": "watch json files and merge them",
   "main": "index.js",
   "scripts": {
     "test:set-up": "ts-node ./test setup -i ./assets/_i18n -o ./.j-2-j/assets/filename -t filename -d -2",
-    "build": "rm -rf ./dist && tsc -p . && npm run package && cp ./README.md ./dist",
+    "build": "rm -rf ./dist && tsc -p . && npm run package && npm run cp",
     "package": "ts-node ./scripts/package",
+    "cp": "cp ./README.md ./dist && cp ./.setting.json ./dist",
     "changelog": "node changelog",
     "test": "ts-node ./test"
   },

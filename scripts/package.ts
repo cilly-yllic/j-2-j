@@ -10,7 +10,9 @@ const dist = {
   },
   description: packageJson.description,
   main: packageJson.main,
-  scripts: {},
+  scripts: {
+    postinstall: 'node ./install'
+  },
   keywords: packageJson.keywords,
   author: packageJson.author,
   license: packageJson.license,
