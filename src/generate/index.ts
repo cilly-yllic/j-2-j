@@ -21,7 +21,7 @@ export default function ( cwd: string, options: Options ): void {
         return;
       }
       filenamesFileKeys.forEach( key => {
-        generate( dirPath, { type: dir.type, outputFilename: key }, filenamesFiles[key], separators, join( cwd, dir.outputPath ? dir.outputPath : `${outputPath}/${dir.dir}` ) )
+        generate( dirPath, { type: dir.type, outputFilename: key }, filenamesFiles[key], separators, join( cwd, dir.outputPath ? dir.outputPath : `${outputPath}/${dir.dir}` ), options.trim )
       } );
       return;
     }
