@@ -3,11 +3,11 @@ import { join } from 'path';
 import { Options } from './generate/interfaces';
 import generate from './generate';
 
-// TODO generate only changed file or same root dir files.
 const changed = ( cwd: string, options: Options, path: string ) => {
   console.log( `updated file: ${path}` );
   console.log( '> re generate' );
-  generate( cwd, options );
+  const changedFile = path.replace( `${join( cwd, './.j-2-j' )}/`, '' );
+  generate( cwd, options, changedFile !== '.setting.json' ? changedFile : '' );
 };
 
 export default function ( cwd: string, options: Options ) {
@@ -27,6 +27,5 @@ export default function ( cwd: string, options: Options ) {
         .on( 'unlinkDir', ( path: string ) => changed( cwd, options, path ) )
         .on( 'change', ( path: string ) => changed( cwd, options, path ) )
   } )
-      .on( 'error', (error) => console.log( '--- error ---', error ) )
   ;
 }
