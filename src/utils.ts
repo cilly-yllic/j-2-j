@@ -1,3 +1,4 @@
+import { basename, extname, dirname } from 'path';
 export const getValueType = ( value: any ): string => Object.prototype.toString.call( value ).slice( 8, - 1 );
 export const isString     = ( value: any ): boolean => getValueType( value ) === 'String';
 export const isArray      = ( value: any ): boolean => getValueType( value ) === 'Array';
@@ -71,8 +72,14 @@ export const removeComment      = ( data, prefix: string, suffix: string ): Obje
   }, {} );
 };
 
-export const getFileName        = ( path: string ) => path.replace( /.+\/([^\/]+)\.\w+$/, '$1' );
-export const getBeforeFilename  = ( path: string ) => path.replace( /^\/?(.+)\/([^\/]+)\.\w+$/, '$1' );
+export const getFileName        = ( path: string ) => {
+  const extension = extname( path );
+  if ( !extension ) {
+    return '';
+  }
+  return basename( path ).replace( extension, '' );
+};
+export const getBeforeFilename  = ( path: string ) => getFileName( path ) ? dirname( path ) : path;
 
 export const getObjectDepth     = ( object: Object ): number => {
   let depth   = 1;

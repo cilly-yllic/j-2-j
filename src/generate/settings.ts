@@ -1,17 +1,18 @@
-import { join } from 'path';
+import { join, normalize } from 'path';
 import { getDirs, exists, readJson } from '../fs';
 import { Options, Settings, PROJECT_DIR, SETTING_FILE, DEFAULT_SETTINGS, DEFAULT_DIR_SETTING } from './interfaces';
-import { getFileName } from '../utils';
+import { getFileName, getBeforeFilename } from '../utils';
 import { warning } from '../log';
 
-export default function ( cwd: string, options: Options ): Settings {
+export default function ( cwd: string, options: Options, target: string = '' ): Settings {
   const projectDir            = join( cwd, PROJECT_DIR );
   const settingFile           = join( projectDir, SETTING_FILE );
   const settings              = readJson( settingFile ) || DEFAULT_SETTINGS;
   let settingDirs             = settings.dirs || {};
   const settingFiles          = settings.files || [];
-  const allDirs               = getDirs( projectDir );
-  const settingExistDirNames  = Object.keys( settingDirs ).filter( dirKey => !settingDirs[dirKey].locked && allDirs.some( leftDir => leftDir === dirKey ) );
+  const targetDir             = getBeforeFilename( target );
+  const allDirs               = getDirs( projectDir ).filter( dir => !!targetDir ? dir === targetDir : true );
+  const settingExistDirNames  = Object.keys( settingDirs ).filter( dirKey => !settingDirs[dirKey].locked && allDirs.some( dir => dir === dirKey ) );
   settingDirs                 = settingExistDirNames.reduce( ( state, current ) => {
     state[current]            = settingDirs[current];
     return state;
@@ -32,6 +33,9 @@ export default function ( cwd: string, options: Options ): Settings {
     if ( file.locked ) {
       return false;
     }
+    if ( !!target && normalize( file.file ) !== normalize( target ) ) {
+      return false;
+    }
     if ( !file.file ) {
       warning( 'there is no file path setting' );
       warning( file );
@@ -45,7 +49,7 @@ export default function ( cwd: string, options: Options ): Settings {
     file.type       = 'i18n';
     return true;
   } ).map( file => {
-    file.outputFilename = getFileName( file.file )
+    file.outputFilename = getFileName( file.file );
     return file;
   } ) || [];
   return { separators: settings.separators, outputPath: settings.outputPath, dirs, files };
